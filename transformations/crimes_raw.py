@@ -6,8 +6,9 @@ from pyspark.sql.types import (
     StructType,
     StructField,
 )
+from utils.datos_abiertos_client import get_terrorism_file
 
-file_path = f"/Volumes/workspace/default/datasets-storage/TERRORISMO_20251110.csv"
+#file_path = f"/Volumes/workspace/default/datasets-storage/TERRORISMO_20251110.csv"
 
 schema = StructType(
     [
@@ -24,4 +25,5 @@ schema = StructType(
 
 @dp.table(comment="Raw data of the number of crimes committed in Colombia")
 def crimes_raw():
+    terrorism_file_content = get_terrorism_file()
     return spark.read.csv(file_path, header=True, schema=schema)
