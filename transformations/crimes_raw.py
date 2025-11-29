@@ -1,6 +1,5 @@
 from pyspark import pipelines as dp
 from pyspark.sql.types import (
-    DoubleType,
     IntegerType,
     StringType,
     StructType,
