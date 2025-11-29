@@ -1,8 +1,10 @@
 from pyspark import pipelines as dp
 from pyspark.sql.types import FloatType, IntegerType, StringType, StructField, StructType
-from utils.datos_abiertos_file import get_divipola_file
+from utils.datos_abiertos_client import get_file_content
+import utils.file_utils as fu
 
-#file_path = f"/Volumes/workspace/default/datasets-storage/DIVIPOLA-_Códigos_departamentos_geolocalizado_20251112.csv"
+file_path = f"{spark.conf.get("divipola.file.path")}"
+file_url = f"{spark.conf.get("resources.url")}{spark.conf.get("divipola.url.file.name")}"
 
 schema = StructType([
     StructField("COD_DPTO", IntegerType(), True),
@@ -14,5 +16,6 @@ schema = StructType([
 
 @dp.table(comment="Raw data of the colombian department coordinates")
 def departments_geo_raw():
-    divipola_file_content = get_divipola_file()
+    divipola_file_content = get_file_content(file_url)
+    fu.write_csv(file_path, divipola_file_content)
     return spark.read.csv(file_path, header=True, schema=schema)    
