@@ -5,7 +5,7 @@ from pyspark.sql.functions import *
 @dp.materialized_view(
     comment="Data of the number of crimes committed in Colombia prepared for analysis"
 )
-@dp.expect_or_drop("date", "date is not null and date >= '2008-12-31'")
+@dp.expect_or_drop("date", "date is not null and date >= '2003-01-01'")
 @dp.expect("department_id", "department_id is not null")
 @dp.expect("department", "department is not null")
 @dp.expect("city_id", "city_id is not null")
@@ -15,7 +15,7 @@ from pyspark.sql.functions import *
 def crimes_prepared():
     return (
         spark.read.table("crimes_raw")
-        .withColumn("date", to_date("FECHA_HECHO", "MM/dd/yyyy"))
+        .withColumn("date", to_date(substring("FECHA_HECHO", 0, 10), "yyyy-MM-dd"))
         .withColumnRenamed("COD_DEPTO", "department_id")
         .withColumnRenamed("DEPARTAMENTO", "department")
         .withColumnRenamed("COD_MUNI", "city_id")
