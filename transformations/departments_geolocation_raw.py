@@ -15,8 +15,12 @@ file_service = FileService(client, file_utils)
 schema = StructType([
     StructField("COD_DPTO", IntegerType(), True),
     StructField("NOM_DPTO", StringType(), True),
+    StructField("COD_MPIO", IntegerType(), True),
+    StructField("NOM_MPIO", StringType(), True),
+    StructField("TIPO", StringType(), True),
     StructField("LATITUD", FloatType(), True),
-    StructField("LONGITUD", FloatType(), True)
+    StructField("LONGITUD", FloatType(), True),
+    StructField("GEO_MUNICIPIO", StringType(), True)
 ])
 
 
