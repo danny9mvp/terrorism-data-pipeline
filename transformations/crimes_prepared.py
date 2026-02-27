@@ -5,7 +5,7 @@ from pyspark.sql.functions import *
 @dp.materialized_view(
     comment="Data of the number of crimes committed in Colombia prepared for analysis"
 )
-@dp.expect_or_drop("date", "date is not null and date >= '2009-01-01'")
+@dp.expect_or_drop("date", "date is not null and date between '2009-01-01' and '2025-12-31'")
 @dp.expect("department_id", "department_id is not null")
 @dp.expect("department", "department is not null")
 @dp.expect("city_id", "city_id is not null")
