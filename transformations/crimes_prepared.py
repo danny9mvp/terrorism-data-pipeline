@@ -16,8 +16,8 @@ def crimes_prepared():
     return (
         spark.read.table("crimes_raw")
         .withColumn("date", to_date(substring("FECHA_HECHO", 0, 10), "yyyy-MM-dd"))
+        .withColumn("department", when(col("DEPARTAMENTO") == "BOGOTA D.C.", "BOGOTA").otherwise(col("DEPARTAMENTO")))
         .withColumnRenamed("COD_DEPTO", "department_id")
-        .withColumnRenamed("DEPARTAMENTO", "department")
         .withColumnRenamed("COD_MUNI", "city_id")
         .withColumnRenamed("MUNICIPIO", "city")
         .withColumnRenamed("ZONA", "zone")
